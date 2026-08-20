@@ -1,6 +1,6 @@
 // ignore_for_file: avoid_print
 
-/// Prints all RAG Chatbot API calls with full structure to the console.
+/// Prints all RAG Chatbot API calls with full structure and curl examples.
 ///
 /// Call [printApiDocs] from main.dart or anywhere to see the complete API map.
 void printApiDocs() {
@@ -20,8 +20,7 @@ void printApiDocs() {
     title: 'Root',
     description: 'Returns basic API info / welcome message.',
     requestHeaders: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
+      'accept': 'application/json',
     },
     requestBody: null,
     responseExample: '''
@@ -29,6 +28,8 @@ void printApiDocs() {
   "message": "RAG Chatbot API",
   "version": "1.0.0"
 }''',
+    curl: '''curl -X 'GET' 'https://bbbw0050-8000.inc1.devtunnels.ms/' \\
+  -H 'accept: application/json' ''',
     statusCodes: [200],
   );
 
@@ -39,8 +40,7 @@ void printApiDocs() {
     title: 'Health Check',
     description: 'Checks if the API server and its dependencies are healthy.',
     requestHeaders: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
+      'accept': 'application/json',
     },
     requestBody: null,
     responseExample: '''
@@ -48,6 +48,8 @@ void printApiDocs() {
   "status": "healthy",
   "version": "1.0.0"
 }''',
+    curl: '''curl -X 'GET' 'https://bbbw0050-8000.inc1.devtunnels.ms/health' \\
+  -H 'accept: application/json' ''',
     statusCodes: [200],
   );
 
@@ -58,11 +60,12 @@ void printApiDocs() {
     title: 'Ingest PDF',
     description: 'Uploads a PDF file for processing and ingestion into the vector store.',
     requestHeaders: {
+      'accept': 'application/json',
       'Content-Type': 'multipart/form-data',
     },
     requestBody: '''
 {
-  "file": <binary PDF file>   // multipart/form-data field named "file"
+  "file": @Marine\\ mammals.pdf;type=application/pdf   // form field
 }''',
     responseExample: '''
 {
@@ -70,6 +73,10 @@ void printApiDocs() {
   "message": "PDF ingested successfully",
   "filename": "document.pdf"
 }''',
+    curl: """curl -X 'POST' 'https://bbbw0050-8000.inc1.devtunnels.ms/ingest' \\
+  -H 'accept: application/json' \\
+  -H 'Content-Type: multipart/form-data' \\
+  -F 'file=@Marine mammals.pdf;type=application/pdf'""",
     statusCodes: [200, 400, 500],
   );
 
@@ -80,16 +87,16 @@ void printApiDocs() {
     title: 'List Documents',
     description: 'Returns a list of all ingested document filenames.',
     requestHeaders: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
+      'accept': 'application/json',
     },
     requestBody: null,
     responseExample: '''
 [
-  "document1.pdf",
-  "document2.pdf",
-  "report.pdf"
+  {"filename": "Marine mammals.pdf", "chunks": 271},
+  {"filename": "System Design Handbook.pdf", "chunks": 165}
 ]''',
+    curl: '''curl -X 'GET' 'https://bbbw0050-8000.inc1.devtunnels.ms/documents' \\
+  -H 'accept: application/json' ''',
     statusCodes: [200, 500],
   );
 
@@ -100,15 +107,16 @@ void printApiDocs() {
     title: 'Delete Document',
     description: 'Deletes an ingested document by its filename.',
     requestHeaders: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
+      'accept': 'application/json',
     },
     requestBody: null,
-    pathParams: {'filename': 'Name of the file to delete (e.g. "report.pdf")'},
+    pathParams: {'filename': 'Name of the file to delete (e.g. "Marine mammals.pdf")'},
     responseExample: '''
 {
-  "message": "Document 'report.pdf' deleted successfully"
+  "message": "Document 'Marine mammals.pdf' deleted successfully"
 }''',
+    curl: """curl -X 'DELETE' 'https://bbbw0050-8000.inc1.devtunnels.ms/documents/Marine%20mammals.pdf' \\
+  -H 'accept: application/json' """,
     statusCodes: [200, 404, 500],
   );
 
@@ -119,22 +127,26 @@ void printApiDocs() {
     title: 'Chat',
     description: 'Sends a query to the RAG chatbot and returns an AI-generated answer with sources.',
     requestHeaders: {
+      'accept': 'application/json',
       'Content-Type': 'application/json',
-      'Accept': 'application/json',
     },
     requestBody: '''
 {
   "query": "What is the main topic of the document?",   // required
-  "filename": "report.pdf"                               // optional — scope to specific doc
+  "filename": "Marine mammals.pdf"                      // optional — scope to specific doc
 }''',
     responseExample: '''
 {
   "answer": "The main topic of the document is ...",
   "sources": [
-    "report.pdf",
+    "Marine mammals.pdf",
     "page 3"
   ]
 }''',
+    curl: """curl -X 'POST' 'https://bbbw0050-8000.inc1.devtunnels.ms/chat' \\
+  -H 'accept: application/json' \\
+  -H 'Content-Type: application/json' \\
+  -d '{"query": "What is the main topic?", "filename": "Marine mammals.pdf"}'""",
     statusCodes: [200, 400, 500],
   );
 
@@ -153,6 +165,7 @@ void _printEndpoint({
   required Map<String, String> requestHeaders,
   required String? requestBody,
   required String responseExample,
+  required String curl,
   required List<int> statusCodes,
   Map<String, String>? pathParams,
 }) {
@@ -212,6 +225,13 @@ void _printEndpoint({
 
   // Status codes
   print('  📊 Status Codes:  ${statusCodes.join(', ')}');
+  print('');
+
+  // cURL
+  print('  🔧 cURL Example:');
+  for (final line in curl.split('\n')) {
+    print('      $line');
+  }
   print('');
 }
 

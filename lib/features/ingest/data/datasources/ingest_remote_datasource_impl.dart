@@ -43,6 +43,9 @@ class IngestRemoteDataSourceImpl implements IngestRemoteDataSource {
         data: formData,
         options: Options(
           contentType: 'multipart/form-data',
+          headers: {
+            'accept': 'application/json',
+          },
         ),
       );
 

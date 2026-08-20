@@ -13,7 +13,10 @@ class DocumentRemoteDataSourceImpl implements DocumentRemoteDataSource {
   @override
   Future<List<DocumentModel>> listDocuments() async {
     try {
-      final response = await dio.get(ApiConfig.documents);
+      final response = await dio.get(
+        ApiConfig.documents,
+        options: Options(headers: {'accept': 'application/json'}),
+      );
 
       final data = response.data;
 
@@ -44,7 +47,10 @@ class DocumentRemoteDataSourceImpl implements DocumentRemoteDataSource {
   @override
   Future<void> deleteDocument(String filename) async {
     try {
-      await dio.delete('${ApiConfig.documents}/$filename');
+      await dio.delete(
+        '${ApiConfig.documents}/$filename',
+        options: Options(headers: {'accept': 'application/json'}),
+      );
     } on DioException catch (e) {
       throw ServerException(
         message: e.message ?? 'Failed to delete document',

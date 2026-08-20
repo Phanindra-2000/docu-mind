@@ -17,6 +17,7 @@ class ChatRemoteDataSourceImpl implements ChatRemoteDataSource {
       final response = await dio.post(
         ApiConfig.chat,
         data: request.toJson(),
+        options: Options(headers: {'accept': 'application/json'}),
       );
 
       return ChatResponseModel.fromJson(response.data as Map<String, dynamic>);
