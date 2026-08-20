@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <!-- Brand gradient: Indigo → Violet -->
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4F46E5"/>
+      <stop offset="100%" stop-color="#7C3AED"/>
+    </linearGradient>
+    <!-- Glow effect -->
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="12" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <!-- Subtle inner shadow -->
+    <filter id="innerShadow">
+      <feOffset dx="0" dy="4"/>
+      <feGaussianBlur stdDeviation="8"/>
+      <feComposite operator="out" in="SourceGraphic"/>
+      <feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+      <feBlend mode="normal" in="SourceGraphic"/>
+    </filter>
+  </defs>
+
+  <!-- Background: rounded square -->
+  <rect x="0" y="0" width="1024" height="1024" rx="220" ry="220" fill="url(#bg)"/>
+
+  <!-- Subtle pattern: circuit-like dots -->
+  <g opacity="0.08" fill="white">
+    <circle cx="180" cy="200" r="8"/>
+    <circle cx="280" cy="160" r="6"/>
+    <circle cx="140" cy="320" r="5"/>
+    <circle cx="840" cy="800" r="8"/>
+    <circle cx="760" cy="860" r="6"/>
+    <circle cx="880" cy="700" r="5"/>
+    <circle cx="200" cy="800" r="6"/>
+    <circle cx="820" cy="220" r="6"/>
+  </g>
+
+  <!-- Document icon (left side) -->
+  <g transform="translate(280, 260)" filter="url(#glow)">
+    <!-- Document body -->
+    <rect x="0" y="0" width="220" height="290" rx="16" fill="white" opacity="0.95"/>
+    <!-- Folded corner -->
+    <path d="M160 0 L220 60 L160 60 Z" fill="#E0E7FF" opacity="0.8"/>
+    <!-- Text lines -->
+    <rect x="32" y="90" width="120" height="12" rx="6" fill="#C7D2FE"/>
+    <rect x="32" y="116" width="156" height="12" rx="6" fill="#C7D2FE"/>
+    <rect x="32" y="142" width="100" height="12" rx="6" fill="#C7D2FE"/>
+    <rect x="32" y="180" width="140" height="12" rx="6" fill="#C7D2FE"/>
+    <rect x="32" y="206" width="120" height="12" rx="6" fill="#C7D2FE"/>
+    <rect x="32" y="240" width="80" height="12" rx="6" fill="#C7D2FE"/>
+  </g>
+
+  <!-- Brain/AI symbol (right side, overlapping) -->
+  <g transform="translate(480, 280)" filter="url(#glow)">
+    <!-- Neural network nodes -->
+    <circle cx="120" cy="60" r="28" fill="white" opacity="0.95"/>
+    <circle cx="40" cy="180" r="28" fill="white" opacity="0.95"/>
+    <circle cx="200" cy="180" r="28" fill="white" opacity="0.95"/>
+    <circle cx="120" cy="260" r="28" fill="white" opacity="0.95"/>
+
+    <!-- Inner dots (brain nodes) -->
+    <circle cx="120" cy="60" r="12" fill="#6366F1"/>
+    <circle cx="40" cy="180" r="12" fill="#7C3AED"/>
+    <circle cx="200" cy="180" r="12" fill="#7C3AED"/>
+    <circle cx="120" cy="260" r="12" fill="#6366F1"/>
+
+    <!-- Connection lines -->
+    <line x1="120" y1="60" x2="40" y2="180" stroke="white" stroke-width="4" opacity="0.6"/>
+    <line x1="120" y1="60" x2="200" y2="180" stroke="white" stroke-width="4" opacity="0.6"/>
+    <line x1="40" y1="180" x2="120" y2="260" stroke="white" stroke-width="4" opacity="0.6"/>
+    <line x1="200" y1="180" x2="120" y2="260" stroke="white" stroke-width="4" opacity="0.6"/>
+    <line x1="40" y1="180" x2="200" y2="180" stroke="white" stroke-width="4" opacity="0.4"/>
+  </g>
+
+  <!-- Sparkle/AI indicators -->
+  <g fill="white" opacity="0.9" filter="url(#glow)">
+    <!-- Top right sparkle -->
+    <path d="M740 200 L750 180 L760 200 L780 210 L760 220 L750 240 L740 220 L720 210 Z" transform="scale(0.8) translate(100, 50)"/>
+    <!-- Bottom left sparkle -->
+    <path d="M740 200 L750 180 L760 200 L780 210 L760 220 L750 240 L740 220 L720 210 Z" transform="scale(0.5) translate(200, 1300)"/>
+  </g>
+
+  <!-- Chat bubble hint (bottom) -->
+  <g transform="translate(340, 620)" filter="url(#glow)">
+    <rect x="0" y="0" width="344" height="90" rx="45" fill="white" opacity="0.95"/>
+    <!-- Bubble tail -->
+    <path d="M60 90 L40 130 L100 90" fill="white" opacity="0.95"/>
+    <!-- Chat dots -->
+    <circle cx="112" cy="45" r="12" fill="#6366F1"/>
+    <circle cx="172" cy="45" r="12" fill="#7C3AED"/>
+    <circle cx="232" cy="45" r="12" fill="#6366F1"/>
+  </g>
+
+  <!-- "DM" text at bottom -->
+  <text x="512" y="880" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="88" font-weight="800" fill="white" text-anchor="middle" letter-spacing="8" opacity="0.95">DM</text>
+</svg>
